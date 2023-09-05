@@ -1,7 +1,29 @@
-document.getElementById('myForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.getElementById('myForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get user input values
     var name = document.getElementById('name').value;
     var year = document.getElementById('year').value;
-    var url = 'https://localhost:8080/?name=' + name + '&year=' + year;
-    document.getElementById('url').textContent = url;
+
+    // Build the query string
+    var queryString = '';
+
+    if (name) {
+        queryString += 'name=' + encodeURIComponent(name);
+    }
+
+    if (year) {
+        if (queryString) {
+            queryString += '&';
+        }
+        queryString += 'year=' + encodeURIComponent(year);
+    }
+
+    // If queryString is not empty, prepend it with '?'
+    if (queryString) {
+        queryString = '?' + queryString;
+    }
+
+    // Update the URL in the h3 element
+    document.getElementById('url').textContent = 'https://localhost:8080/' + queryString;
 });
